@@ -1,0 +1,27 @@
+version: '2.3'
+
+services:
+  nb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_IMG: pytorch/pytorch:2.1.2-cuda12.1-cudnn8-devel
+    ports:
+      - 8020:8888
+      - 7860:7860  # gradio one
+    volumes:
+      - ./work/:/home/jovyan/work/
+      - /srv/wdc1/:/home/jovyan/wdc1/
+    command:
+      - jupyter
+      - lab
+      - --ip=0.0.0.0
+      - --port=8888
+      - --no-browser
+      - --notebook-dir="/home/jovyan/"
+      - --allow-root
+      - --LabApp.token="$TOKEN"
+    user: jovyan
+    runtime: nvidia
+
