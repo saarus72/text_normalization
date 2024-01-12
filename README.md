@@ -7,14 +7,9 @@ The MVP model is [on huggingface](https://huggingface.co/saarus72/russian_text_n
 A pet project as the (only) [other solution](https://github.com/snakers4/russian_stt_text_normalization) does not seem to be maintainable by either owner or others. Some others do exist and are, like, *bad*.
 
 > E.g. for input `я купил iphone 10X за 14990 руб без 3-x часов полдень и т.д.` output of
+> * [russian_stt_text_normalization](https://github.com/snakers4/russian_stt_text_normalization) itself is `я купил ифон десять кс за четыре девять девять ноль рублей без третьи часов полдень и т.д.`
 > * [text-normalization-ru-terrible](https://huggingface.co/maximxls/text-normalization-ru-terrible) is `я купил айфон сто икс за тысячу четыреста девяносто рубле без третьих часов пол`,
 > * [text-normalization-ru-new](https://huggingface.co/alexue4/text-normalization-ru-new) is `я купил ифон десять икс за четырнадцать тысяч девять`.
-> * [russian_stt_text_normalization](https://github.com/snakers4/russian_stt_text_normalization) itself is `я купил ифон десять кс за четыре девять девять ноль рублей без третьи часов полдень и т.д.`
-
-
-from normalizer import Normalizer
-normlizer = Normalizer(jit_model="/models/jit_s2s.pt")
-normlizer.norm_text(text)
 
 ### Do I have a plan
 
