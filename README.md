@@ -27,10 +27,12 @@ I from where I stand see these steps:
         * Used ~~[NeMo Text Processing](https://github.com/NVIDIA/NeMo-text-processing)~~ [another python package](https://github.com/flockentanz/word_to_number_ru) with some additions.
     1. Polish things roughly like balance (as `два` seems to be *far* more common than `двумястами`), get rid of ITN mistakes etc.
 1. Train an MVP.
-    > Notebook to [train](./work/train/train.ipynb) a model.
+    > Notebooks to [train](./work/train/train.ipynb) and to [distributed train](./work/train/train-distributed.ipynb) a model.
     1. Get a relatively big LLM as we are going to prune it then (and to onnx it as well so that the resulting performance is compatible with the solution I've mantioned).
-        * Seems to be [ai-forever/FRED-T5-1.7B](https://huggingface.co/ai-forever/FRED-T5-1.7B) as it is encoder-decoder, trainable on single **RTX3060 12Gb** and good enough to get an MVP.
-            > Turned out that 12 Gb is enough to inference it only so I've trained [ai-forever/FRED-T5-large](https://huggingface.co/ai-forever/FRED-T5-large).
+        * Seems to be [ai-forever/FRED-T5-1.7B](https://huggingface.co/ai-forever/FRED-T5-1.7B) as it is encoder-decoder, trainable on single **RTX3060 12GB** and good enough to get an MVP.
+            > Turned out that 12GB is enough to inference it only so I've trained [ai-forever/FRED-T5-large](https://huggingface.co/ai-forever/FRED-T5-large).
+
+            > I've managed to run **FRED-T5-1.7B** train on two 12GB GPUs using [`tensor_parallel`](https://github.com/BlackSamorez/tensor_parallel) package but model did not perform notably better. Also, the point is to have a small and fast model to infer it on CPU.
     1. Train, like, any barely working model.
         * Several attempts are required as it is not clear which prompt is better. May be
             ```
