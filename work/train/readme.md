@@ -1,5 +1,6 @@
-First train attempt has been done on 
+# Single GPU train [.ipynb](./work/train/train.ipynb)
 
+First model has been trained on singe GPU.
 
 I personally have four RTX 3060 12Gb.
 [FRED-T5-1.7B](https://huggingface.co/ai-forever/FRED-T5-1.7B) does not fit into a single GPU.
@@ -16,4 +17,10 @@ According to the [memory calculator](https://huggingface.co/spaces/hf-accelerate
 | [ruT5-large](https://huggingface.co/ai-forever/ruT5-large) | 10.99 GB | 5.5 GB | 2.75 GB | 1.37 GB | 703.5 MB | 351.75 MB |
 | [ruT5-base](https://huggingface.co/ai-forever/ruT5-base) | 3.32 GB | 1.66 GB | 850.31 MB | 425.15 MB | 212.58 MB | 106.29 MB |
 
-**transformers** allows to use [three](https://huggingface.co/docs/transformers/perf_train_gpu_many) options to 
+# Two-GPU distributed train [.ipynb](./work/train/train.ipynb)
+
+**transformers** itself suggests [three](https://huggingface.co/docs/transformers/perf_train_gpu_many) options to train on several GPU as a model doesn't fin into a single one.
+I chose TensorParallel as I have found a good (but a bit obsolete) package for that :)
+
+The second model has been trained on two GPUs with [`tensor_parallel`](https://github.com/BlackSamorez/tensor_parallel) package.
+I suppose I could use 3+ GPUs but there was `Bus error (core dumped)` error (not caused by the library as vanilla train of a _small_ model do cause it as well).
