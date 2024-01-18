@@ -12,6 +12,8 @@ services:
       - 7860:7860  # gradio one
     volumes:
       - ./work/:/home/jovyan/work/
+      - ./data/:/home/jovyan/data/
+      - ./models/:/home/jovyan/models/
       - /srv/wdc1/:/home/jovyan/wdc1/
     command:
       - jupyter

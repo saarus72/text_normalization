@@ -1,3 +1,5 @@
 .Trash*
-work/models
-*/.ipynb_checkpoints/*
+models
+data
+**/.ipynb_checkpoints/*
+**/__pycache__
