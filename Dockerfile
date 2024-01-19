@@ -8,15 +8,20 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 
 RUN pip install --upgrade -v \
-  "pip" \
+  "datasets" \
   "ipywidgets" \
   "jupyter" \
   "jupyterlab-git" \
   "jupyterlab>=4.0.0" \
+  "matplotlib" \
+  "pip" \
   "requests" \
+  "sentencepiece" \
+  "tensorboard" \
   "tqdm==4.62.2" \
+  "transformers[torch]" \
   && rm -rf ~/.cache/pip/*
-RUN apt install -y git
+RUN apt update && apt install -y git
 
 RUN if ! id jovyan >/dev/null 2>&1; then \
   useradd -m -u 1000 -g 100 -s /bin/bash -d /home/jovyan jovyan; \

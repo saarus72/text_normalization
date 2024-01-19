@@ -10,6 +10,7 @@ services:
     ports:
       - 8020:8888
       - 7860:7860  # gradio one
+      - 8006-8010:8006-8010  # tensorboard
     volumes:
       - ./work/:/home/jovyan/work/
       - ./data/:/home/jovyan/data/
