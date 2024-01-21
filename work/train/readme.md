@@ -19,7 +19,7 @@ According to the [memory calculator](https://huggingface.co/spaces/hf-accelerate
 
 # Two-GPU distributed train [.ipynb](./work/train/train.ipynb)
 
-**transformers** itself suggests [three](https://huggingface.co/docs/transformers/perf_train_gpu_many) options to train on several GPU as a model doesn't fin into a single one.
+**transformers** itself suggests [three](https://huggingface.co/docs/transformers/perf_train_gpu_many) options to train on several GPU as a model doesn't fit into a single one.
 I chose TensorParallel as I have found a good (but a bit obsolete) package for that :)
 
 The second model has been trained on two GPUs with [`tensor_parallel`](https://github.com/BlackSamorez/tensor_parallel) package.

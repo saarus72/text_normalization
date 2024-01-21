@@ -1,6 +1,6 @@
 # Text normalization
 
-The MVP model is [on huggingface](https://huggingface.co/saarus72/russian_text_normalizer).
+The fully working model is [on huggingface](https://huggingface.co/saarus72/russian_text_normalizer), and a [nice chat](https://huggingface.co/spaces/saarus72/russian-text-normalization) is on HF Space as well.
 
 ### Why
 
@@ -11,23 +11,23 @@ A pet project as the (only) [other solution](https://github.com/snakers4/russian
 > * [text-normalization-ru-terrible](https://huggingface.co/maximxls/text-normalization-ru-terrible) is `я купил айфон сто икс за тысячу четыреста девяносто рубле без третьих часов пол`,
 > * [text-normalization-ru-new](https://huggingface.co/alexue4/text-normalization-ru-new) is `я купил ифон десять икс за четырнадцать тысяч девять`.
 
-### Do I have a plan
+### The plan
 
-I from where I stand see these steps:
+I went along with! Took these steps:
 
 1. Get a dataset.
-    > Notebooks to [find](./work/dataset/1_find_numbers.ipynb) and to [itn](./work/dataset/2b_inverse_normalize.ipynb) texts.
+    > Done with notebooks to [find](./work/dataset/1_find_numbers.ipynb) and to [itn](./work/dataset/2_inverse_normalize.ipynb) texts, then to [construct dataset](./work/dataset/3_process_itn.ipynb).
     1. Download any vast (informal?) russian raw text corpus. Could be
         * [IlyaGusev/ficbook](https://huggingface.co/datasets/IlyaGusev/ficbook),
         * [IlyaGusev/librusec_full](https://huggingface.co/datasets/IlyaGusev/librusec_full), or
-        * [Taiga Corpus](https://tatianashavrina.github.io/taiga_site).
+        * ~~[Taiga Corpus](https://tatianashavrina.github.io/taiga_site)~~ [pikabu](https://huggingface.co/datasets/IlyaGusev/pikabu)!
     1. Find occurances w/ regexp patterns like `r"двадцат\S+"`, 
     1. Make sure there is nothing but cyrillic.
     1. Make inverse text normalization (that task is more straightforward and many good solutions do exist).
         * Used ~~[NeMo Text Processing](https://github.com/NVIDIA/NeMo-text-processing)~~ [another python package](https://github.com/flockentanz/word_to_number_ru) with some additions.
     1. Polish things roughly like balance (as `два` seems to be *far* more common than `двумястами`), get rid of ITN mistakes etc.
 1. Train an MVP.
-    > Notebooks to [train](./work/train/train.ipynb) and to [distributed train](./work/train/train-distributed.ipynb) a model.
+    > Done with notebooks to [train](./work/train/train.ipynb) and to [distributed train](./work/train/train-distributed.ipynb) a model.
     1. Get a relatively big LLM as we are going to prune it then (and to onnx it as well so that the resulting performance is compatible with the solution I've mantioned).
         * Seems to be [ai-forever/FRED-T5-1.7B](https://huggingface.co/ai-forever/FRED-T5-1.7B) as it is encoder-decoder, trainable on single **RTX3060 12GB** and good enough to get an MVP.
             > Turned out that 12GB is enough to inference it only so I've trained [ai-forever/FRED-T5-large](https://huggingface.co/ai-forever/FRED-T5-large).
@@ -41,12 +41,11 @@ I from where I stand see these steps:
             > Turned out the pattern below works well so I've made no experiments here.
     1. Test and analyze.
     1. ~~Regret deeply.~~
-1. To obtain a dataset of a better quality, we want to ask really big smart ass LLM to **(not inverse!)** normalize texts during the training. It may benefit in
-    * having latin staff normalization (abbreviations, brands, urls etc.),
-    * cover non-trivial numbers like dates `в период 20-24.10.23 отключат всё и сразу` as we are unlikely to construct such strings on owr own, and
-    * balance numbers as we seem to may change **some** digits freely to have a *bigger* number (from `до 3-го предупреждения` to `до 1488-го предупреждения` but not  `получил 3 предупреждения` to `получил 1488 предупреждения`; increase on a multiple of 100 looks nice).
-1. Finetune again.
-1. GOTO 1 or 3.
+1. To obtain a dataset of a better quality, we want to ask really big smart ass LLM to **(not inverse!)** normalize texts during the training.
+    * Unfortunately, LLM exeriments failed. I took instruct models ([Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2), [ruGPT-3.5 13B LoRA](https://huggingface.co/evilfreelancer/ruGPT-3.5-13B-lora), [GigaSaiga](https://huggingface.co/IlyaGusev/gigasaiga_lora), [Saiga2 7B](https://huggingface.co/IlyaGusev/saiga2_13b_lora)) and plain generation ones ([ruGPT-3.5-13B-GPTQ](https://huggingface.co/fffrrt/ruGPT-3.5-13B-GPTQ) and [Vikhr-7b-0.1](https://huggingface.co/AlexWortega/Vikhr-7b-0.1)), but there were always too much of mistakes which can not be catch automatically. Well, they _were_, so I decided to...
+1. Take the [Kaggle Text Normalization Challenge](https://www.kaggle.com/competitions/text-normalization-challenge-russian-language) dataset! So I had latin normalization as well.
+    > Done with a notebook to [process kaggle data](./work/dataset/4_process_kaggle.ipynb).
+1. Train everything again at last. Put [on hf](https://huggingface.co/saarus72/russian_text_normalizer).
 
 ## Inverse Text Normalization
 
