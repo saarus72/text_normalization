@@ -28,7 +28,7 @@ I went along with! Took these steps:
     1. Polish things roughly like balance (as `два` seems to be *far* more common than `двумястами`), get rid of ITN mistakes etc.
 1. Train an MVP.
     > Done with notebooks to [train](./work/train/train.ipynb) and to [distributed train](./work/train/train-distributed.ipynb) a model.
-    1. Get a relatively big LLM as we are going to prune it then (and to onnx it as well so that the resulting performance is compatible with the solution I've mantioned).
+    1. Get a relatively big LLM as we are going to prune it after (and to onnx it as well so that the resulting performance is compatible with the solution I've mentioned).
         * Seems to be [ai-forever/FRED-T5-1.7B](https://huggingface.co/ai-forever/FRED-T5-1.7B) as it is encoder-decoder, trainable on single **RTX3060 12GB** and good enough to get an MVP.
             > Turned out that 12GB is enough to inference it only so I've trained [ai-forever/FRED-T5-large](https://huggingface.co/ai-forever/FRED-T5-large).
 
@@ -42,7 +42,7 @@ I went along with! Took these steps:
     1. Test and analyze.
     1. ~~Regret deeply.~~
 1. To obtain a dataset of a better quality, we want to ask really big smart ass LLM to **(not inverse!)** normalize texts during the training.
-    * Unfortunately, LLM exeriments failed. I took instruct models ([Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2), [ruGPT-3.5 13B LoRA](https://huggingface.co/evilfreelancer/ruGPT-3.5-13B-lora), [GigaSaiga](https://huggingface.co/IlyaGusev/gigasaiga_lora), [Saiga2 7B](https://huggingface.co/IlyaGusev/saiga2_13b_lora)) and plain generation ones ([ruGPT-3.5-13B-GPTQ](https://huggingface.co/fffrrt/ruGPT-3.5-13B-GPTQ) and [Vikhr-7b-0.1](https://huggingface.co/AlexWortega/Vikhr-7b-0.1)), but there were always too much of mistakes which can not be catch automatically. Well, they _were_, so I decided to...
+    * Unfortunately, LLM experiments failed. I took instruct models ([Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2), [ruGPT-3.5 13B LoRA](https://huggingface.co/evilfreelancer/ruGPT-3.5-13B-lora), [GigaSaiga](https://huggingface.co/IlyaGusev/gigasaiga_lora), [Saiga2 7B](https://huggingface.co/IlyaGusev/saiga2_13b_lora)) and plain generation ones ([ruGPT-3.5-13B-GPTQ](https://huggingface.co/fffrrt/ruGPT-3.5-13B-GPTQ) and [Vikhr-7b-0.1](https://huggingface.co/AlexWortega/Vikhr-7b-0.1)), but there were always too many mistakes which can not be catch automatically. Well, they _were_, so I decided to...
 1. Take the [Kaggle Text Normalization Challenge](https://www.kaggle.com/competitions/text-normalization-challenge-russian-language) dataset! So I had latin normalization as well.
     > Done with a notebook to [process kaggle data](./work/dataset/4_process_kaggle.ipynb).
 1. Train everything again at last. Put [on hf](https://huggingface.co/saarus72/russian_text_normalizer).
