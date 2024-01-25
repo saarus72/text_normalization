@@ -24,3 +24,4 @@ I chose TensorParallel as I have found a good (but a bit obsolete) package for t
 
 The second model has been trained on two GPUs with [`tensor_parallel`](https://github.com/BlackSamorez/tensor_parallel) package.
 I suppose I could use 3+ GPUs but there was `Bus error (core dumped)` error (not caused by the library as vanilla train of a _small_ model do cause it as well).
+> I've managed to fix it then by increasing SHM size up to 8 GB as suggested [here](https://github.com/pytorch/pytorch/issues/2244).

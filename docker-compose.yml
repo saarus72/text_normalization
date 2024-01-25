@@ -27,6 +27,7 @@ services:
       - --LabApp.token="$TOKEN"
     user: jovyan
     runtime: nvidia
+    shm_size: '8gb'
     restart: always
     deploy:
       resources:
